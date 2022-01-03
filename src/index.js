@@ -1,4 +1,5 @@
 const https = require('https')
+require('dns')
 
 const TARGET_URL = 'https://example.com'
 

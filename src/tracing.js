@@ -1,9 +1,10 @@
 const opentelemetry = require('@opentelemetry/sdk-node')
-const { getNodeAutoInstrumentations } = require('@opentelemetry/auto-instrumentations-node')
+const { HttpInstrumentation } = require('@opentelemetry/instrumentation-http')
+const { DnsInstrumentation } = require('@opentelemetry/instrumentation-dns')
 const { AwsLambdaInstrumentation } = require('@opentelemetry/instrumentation-aws-lambda')
 const { AWSXRayIdGenerator } = require('@opentelemetry/id-generator-aws-xray')
 const { AWSXRayPropagator } = require('@opentelemetry/propagator-aws-xray')
-const { OTLPTraceExporter } = require('@opentelemetry/exporter-otlp-proto')
+const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-proto')
 
 const { ConsoleSpanExporter, BatchSpanProcessor } = opentelemetry.tracing
 
@@ -18,10 +19,13 @@ const sdk = new opentelemetry.NodeSDK({
   spanProcessor,
   textMapPropagator: new AWSXRayPropagator(),
   instrumentations: [
-    getNodeAutoInstrumentations(),
+    new HttpInstrumentation(),
+    new DnsInstrumentation(),
     new AwsLambdaInstrumentation(),
   ],
 })
 
 sdk._tracerProviderConfig.tracerConfig.idGenerator = new AWSXRayIdGenerator()
 sdk.start()
+
+global.spanProcessor = spanProcessor
