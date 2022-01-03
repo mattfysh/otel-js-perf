@@ -1,0 +1,16 @@
+{
+  "name": "otel-js-perf",
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "node dev.js"
+  },
+  "dependencies": {
+    "@opentelemetry/api": "^1.0.4",
+    "@opentelemetry/auto-instrumentations-node": "^0.27.1",
+    "@opentelemetry/exporter-otlp-proto": "^0.26.0",
+    "@opentelemetry/id-generator-aws-xray": "^1.0.0",
+    "@opentelemetry/instrumentation-aws-lambda": "^0.28.0",
+    "@opentelemetry/propagator-aws-xray": "^1.0.0",
+    "@opentelemetry/sdk-node": "^0.27.0"
+  }
+}
